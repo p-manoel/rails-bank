@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20230524162620) do
+ActiveRecord::Schema.define(version: 20230524190944) do
 
   create_table "accounts", force: true do |t|
     t.string   "owner_name"
@@ -19,6 +19,16 @@ ActiveRecord::Schema.define(version: 20230524162620) do
     t.boolean  "closed",                              default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "transactions", force: true do |t|
+    t.string   "type",                                                       null: false
+    t.decimal  "amount",              precision: 10, scale: 2
+    t.decimal  "fee",                 precision: 10, scale: 2, default: 0.0
+    t.integer  "receiver_account_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "account_id"
   end
 
 end
