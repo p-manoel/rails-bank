@@ -1,6 +1,8 @@
 class Account::Record < ActiveRecord::Base
   self.table_name = 'accounts'
 
+  has_many :transactions, class_name: 'Transaction::Record', foreign_key: :account_id
+
   attr_accessible :owner_name, :balance, :closed
 
   before_destroy :prevent_destroy
