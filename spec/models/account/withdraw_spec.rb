@@ -11,6 +11,13 @@ RSpec.describe ::Account::Withdraw, type: :model do
         let(:account) { Account::Record.create(owner_name: 'John Doe', balance: 100, closed: false) }
         let(:amount) { 50 }
 
+        it 'returns a success' do
+          result = withdraw
+
+          expect(result).to be_a_success
+          expect(result.type).to eq(:amount_withdrawn)
+        end
+
         it 'decreases the balance' do
           expect { withdraw }.to change { account.balance }.from(100).to(50)
         end

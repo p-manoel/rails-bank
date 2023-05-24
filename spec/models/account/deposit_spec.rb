@@ -10,6 +10,13 @@ RSpec.describe ::Account::Deposit, type: :model do
       context 'when the account is open' do
         let(:account) { Account::Record.create(owner_name: 'John Doe', balance: 100, closed: false) }
 
+        it 'returns a success' do
+          result = deposit
+
+          expect(result).to be_a_success
+          expect(result.type).to eq(:amount_deposited)
+        end
+
         it 'increases the balance' do
           expect { deposit }.to change { account.balance }.from(100).to(200)
         end
