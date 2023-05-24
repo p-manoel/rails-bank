@@ -59,3 +59,5 @@ gem "test-unit", "~> 3.5"
 gem "protected_attributes", "~> 1.1"
 
 gem "shoulda-matchers", "~> 3.1"
+
+gem "u-case", "~> 4.5"
