@@ -21,7 +21,7 @@ RSpec.describe ::Transaction::Transfer::Perform, type: :u_case do
             result = transfer
 
             expect(result).to be_a_success
-            expect(result.type).to eq(:tranfer_transaction_performed)
+            expect(result.type).to eq(:transfer_transaction_performed)
           end
 
           it 'creates a transfer transaction with a fee of 5' do
@@ -70,7 +70,7 @@ RSpec.describe ::Transaction::Transfer::Perform, type: :u_case do
             result = transfer
   
             expect(result).to be_a_success
-            expect(result.type).to eq(:tranfer_transaction_performed)
+            expect(result.type).to eq(:transfer_transaction_performed)
           end
 
           it 'creates a transfer transaction with fee of 7' do

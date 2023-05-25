@@ -36,7 +36,7 @@ module Transaction
       ::Account::Withdraw.call(account: sender_account, amount: amount + calculate_fee)
       ::Account::Deposit.call(account: receiver_account, amount: amount)
 
-      Success(:tranfer_transaction_performed)
+      Success(:transfer_transaction_performed)
     end
 
     def calculate_fee
