@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20230524190944) do
+ActiveRecord::Schema.define(version: 20230524214800) do
 
   create_table "accounts", force: true do |t|
     t.string   "owner_name"
@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20230524190944) do
   end
 
   create_table "transactions", force: true do |t|
-    t.string   "type",                                                       null: false
+    t.string   "_type"
     t.decimal  "amount",              precision: 10, scale: 2
     t.decimal  "fee",                 precision: 10, scale: 2, default: 0.0
     t.integer  "receiver_account_id"
@@ -30,5 +30,7 @@ ActiveRecord::Schema.define(version: 20230524190944) do
     t.datetime "updated_at"
     t.integer  "account_id"
   end
+
+  add_index "transactions", ["account_id"], name: "index_transactions_on_account_id"
 
 end
