@@ -1,11 +1,11 @@
 class Transaction::Record < ActiveRecord::Base
   self.table_name = 'transactions'
 
-  belongs_to :account, class_name: 'Account::Record'
+  belongs_to :account, class_name: '::Account::Record'
 
-  attr_accessible :type, :amount, :fee, :receiver_account_id
+  attr_accessible :account, :_type, :amount, :fee, :receiver_account_id
 
-  validates_presence_of :type, :amount, :fee
+  validates_presence_of :_type, :amount, :fee
   validates_numericality_of :amount, greater_than: 0
 
   TYPES = {
@@ -14,5 +14,5 @@ class Transaction::Record < ActiveRecord::Base
     transfer: 'transfer'
   }.freeze
 
-  validates :type, inclusion: { in: TYPES.values }
+  validates :_type, inclusion: { in: TYPES.values }
 end
