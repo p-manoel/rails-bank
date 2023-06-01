@@ -119,5 +119,40 @@ RSpec.describe ::Transaction::Transfer::Perform, type: :u_case do
         end
       end
     end
+
+    describe 'failures' do
+      context 'when sender account is closed' do
+        let(:sender_account) { Account::Record.create(owner_name: 'Jonny Deep', balance: 2000, closed: true) }
+
+        it 'returns a failure' do
+          result = transfer
+
+          expect(result).to be_a_failure
+          expect(result.type).to eq(:sender_account_is_closed)
+        end
+      end
+
+      context 'when receiver account is closed' do
+        let(:receiver_account) { Account::Record.create(owner_name: 'John Doe', balance: 0, closed: true) }
+
+        it 'returns a failure' do
+          result = transfer
+
+          expect(result).to be_a_failure
+          expect(result.type).to eq(:receiver_account_is_closed)
+        end
+      end
+
+      context 'when sender account has insufficient balance' do
+        let(:amount) { 2001 }
+
+        it 'returns a failure' do
+          result = transfer
+
+          expect(result).to be_a_failure
+          expect(result.type).to eq(:insufficient_balance)
+        end
+      end
+    end
   end
 end
