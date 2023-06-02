@@ -5,6 +5,7 @@
   <div style="margin-top: 30px;">
     <% if user_signed_in? %>
       <p>Welcome back, <%= current_user.account.owner_name %>!</p>
+      <p>Your account ID is: <%= current_user.account.id %></p>
       <p>Your balance is: <%= number_to_currency(current_user.account.balance) %></p>
       
       <!-- Added transaction action links -->
