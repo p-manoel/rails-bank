@@ -13,6 +13,8 @@ module Transaction
     private
 
     def check_accounts
+      return Failure(:receiver_account_does_not_exist) if receiver_account.nil?
+      return Failure(:sender_and_receiver_accounts_are_the_same) if sender_account.id == receiver_account.id
       return Failure(:sender_account_is_closed) if sender_account.closed?
       return Failure(:receiver_account_is_closed) if receiver_account.closed?
       return Failure(:insufficient_balance) if (amount + calculate_fee) > sender_account.balance

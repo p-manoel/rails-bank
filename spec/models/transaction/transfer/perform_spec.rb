@@ -121,6 +121,28 @@ RSpec.describe ::Transaction::Transfer::Perform, type: :u_case do
     end
 
     describe 'failures' do
+      context 'when receiver account does not exist' do
+        let(:receiver_account) { nil }
+
+        it 'returns a failure' do
+          result = transfer
+
+          expect(result).to be_a_failure
+          expect(result.type).to eq(:receiver_account_does_not_exist)
+        end
+      end
+
+      context 'when sender account and receiver account are the same' do
+        let(:receiver_account) { sender_account }
+
+        it 'returns a failure' do
+          result = transfer
+
+          expect(result).to be_a_failure
+          expect(result.type).to eq(:sender_and_receiver_accounts_are_the_same)
+        end
+      end
+
       context 'when sender account is closed' do
         let(:sender_account) { Account::Record.create(owner_name: 'Jonny Deep', balance: 2000, closed: true) }
 
