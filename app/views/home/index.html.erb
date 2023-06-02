@@ -1,0 +1,15 @@
+<div style="text-align: center; margin: 50px;">
+  <h1>Welcome to Rails Bank</h1>
+  <p>A simple, secure, and efficient ATM system.</p>
+
+  <div style="margin-top: 30px;">
+    <% if user_signed_in? %>
+      <p>Welcome back, <%= current_user.account.owner_name %>!</p>
+      <%= link_to 'My Transactions', transactions_path, style: 'display: inline-block; margin: 20px; text-decoration: none; color: #333; border: 1px solid #333; padding: 10px;' %>
+      <%= link_to 'Sign out', destroy_user_session_path, method: :delete, style: 'display: inline-block; margin: 20px; text-decoration: none; color: #333; border: 1px solid #333; padding: 10px;' %>
+    <% else %>
+      <%= link_to 'Sign up', new_user_registration_path, style: 'display: inline-block; margin: 20px; text-decoration: none; color: #333; border: 1px solid #333; padding: 10px;' %>
+      <%= link_to 'Sign in', new_user_session_path, style: 'display: inline-block; margin: 20px; text-decoration: none; color: #333; border: 1px solid #333; padding: 10px;' %>
+    <% end %>
+  </div>
+</div>
