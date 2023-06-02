@@ -3,7 +3,7 @@ class TransactionsController < ApplicationController
   before_action :set_account
 
   def index
-    @transactions = ::Transaction::Record.where(account_id: @account.id)
+    @transactions = ::Transaction::Record.where(account_id: @account.id).order(created_at: :desc)
   end
 
   def new
@@ -12,27 +12,25 @@ class TransactionsController < ApplicationController
   end
 
   def create
-    puts transaction_params
     if transaction_params[:_type] == 'deposit'
       ::Transaction::Deposit::Perform.call(account: @account, amount: transaction_params[:amount].to_f)
-      .on_success { redirect_to transactions_path, notice: 'Deposit was successfully done.' }
-      .on_failure(:account_is_closed) { redirect_to transactions_path, alert: 'Your account is closed.' }
-      .on_unknown { redirect_to transactions_path, alert: 'Something went wrong.' }
+        .on_success { redirect_to transactions_path, notice: 'Deposit was successfully done.' }
+        .on_failure { |result| redirect_to transactions_path, alert: "#{ result.type.to_s.humanize }" }
+        .on_unknown { redirect_to transactions_path, alert: 'Something went wrong.' }
     elsif transaction_params[:_type] == 'withdraw'
       ::Transaction::Withdraw::Perform.call(account: @account, amount: transaction_params[:amount].to_f)
-      .on_success { redirect_to transactions_path, notice: 'Withdraw was successfully done.' }
-      .on_failure(:account_is_closed) { redirect_to transactions_path, alert: 'Your account is closed.' }
-      .on_failure(:insufficient_balance) { redirect_to transactions_path, alert: 'Insufficient balance.' }
-      .on_unknown { redirect_to transactions_path, alert: 'Something went wrong.' }
+        .on_success { redirect_to transactions_path, notice: 'Withdraw was successfully done.' }
+        .on_failure { |result| redirect_to transactions_path, alert: "#{ result.type.to_s.humanize }" }
+        .on_unknown { redirect_to transactions_path, alert: 'Something went wrong.' }
     elsif transaction_params[:_type] == 'transfer'
-      ::Transaction::Transfer::Perform.call(account: @account, amount: transaction_params[:amount].to_f, receiver_account_id: transaction_params[:receiver_account_id])
-      .on_success { redirect_to transactions_path, notice: 'Transfer was successfully done.' }
-      .on_failure(:account_is_closed) { redirect_to transactions_path, alert: 'Your account is closed.' }
-      .on_failure(:insufficient_balance) { redirect_to transactions_path, alert: 'Insufficient balance.' }
-      .on_failure(:to_account_is_closed) { redirect_to transactions_path, alert: 'Receiver account is closed.' }
-      .on_unknown { redirect_to transactions_path, alert: 'Something went wrong.' }
+      receiver_account = ::Account::Record.find_by(id: transaction_params[:receiver_account_id])
+
+      ::Transaction::Transfer::Perform.call(sender_account: @account, amount: transaction_params[:amount].to_f, receiver_account: receiver_account)
+        .on_success { redirect_to transactions_path, notice: 'Transfer was successfully done.' }
+        .on_failure { |result| redirect_to transactions_path, alert: "#{ result.type.to_s.humanize }" }
+        .on_unknown { redirect_to transactions_path, alert: 'Something went wrong.' }
     else
-      redirect_to :root, alert: 'Something went wrong.'
+      redirect_to transactions_path, alert: 'Something went wrong.'
     end
   end
 
