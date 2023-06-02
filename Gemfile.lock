@@ -26,6 +26,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     arel (4.0.2)
+    bcrypt (3.1.18)
     builder (3.1.4)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
@@ -35,6 +36,13 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.2.2)
+    devise (3.5.10)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      responders
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     diff-lcs (1.5.0)
     erubis (2.7.0)
     execjs (2.8.1)
@@ -61,6 +69,7 @@ GEM
     mini_mime (1.1.2)
     minitest (4.7.5)
     multi_json (1.15.0)
+    orm_adapter (0.5.0)
     power_assert (2.0.3)
     protected_attributes (1.1.4)
       activemodel (>= 4.0.1, < 5.0)
@@ -132,12 +141,15 @@ GEM
       u-attributes (>= 2.7, < 3.0)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
+    warden (1.2.7)
+      rack (>= 1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  devise (~> 3.5)
   inherited_resources (~> 1.7)
   jbuilder (~> 1.2)
   jquery-rails

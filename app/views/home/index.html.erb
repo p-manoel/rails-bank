@@ -1,0 +1,25 @@
+<div style="text-align: center; margin: 50px;">
+  <h1>Welcome to Rails Bank</h1>
+  <p>A simple, secure, and efficient ATM system.</p>
+
+  <div style="margin-top: 30px;">
+    <% if user_signed_in? %>
+      <p>Welcome back, <%= current_user.account.owner_name %>!</p>
+      <p>Your balance is: <%= number_to_currency(current_user.account.balance) %></p>
+      
+      <!-- Added transaction action links -->
+      <%= link_to "Deposit", new_transaction_path(_type: 'deposit'), style: "display: inline-block; background-color: #808080; color: white; padding: 10px 20px; text-decoration: none; border: none; cursor: pointer; margin: 15px;" %>
+      <%= link_to "Withdraw", new_transaction_path(_type: 'withdraw'), style: "display: inline-block; background-color: #808080; color: white; padding: 10px 20px; text-decoration: none; border: none; cursor: pointer; margin: 15px;" %>
+      <%= link_to "Transfer", new_transaction_path(_type: 'transfer'), style: "display: inline-block; background-color: #808080; color: white; padding: 10px 20px; text-decoration: none; border: none; cursor: pointer; margin: 15px;" %>
+      <%= link_to 'My Transactions', transactions_path, style: 'display: inline-block; margin: 20px; text-decoration: none; color: #333; border: 1px solid #333; padding: 10px;' %>
+
+      <br><br>
+
+      <%= link_to 'Sign out', destroy_user_session_path, method: :delete, style: 'display: inline-block; margin: 20px; text-decoration: none; color: #333; border: 1px solid #333; padding: 10px;' %>
+      
+    <% else %>
+      <%= link_to 'Sign up', new_user_registration_path, style: 'display: inline-block; margin: 20px; text-decoration: none; color: #333; border: 1px solid #333; padding: 10px;' %>
+      <%= link_to 'Sign in', new_user_session_path, style: 'display: inline-block; margin: 20px; text-decoration: none; color: #333; border: 1px solid #333; padding: 10px;' %>
+    <% end %>
+  </div>
+</div>

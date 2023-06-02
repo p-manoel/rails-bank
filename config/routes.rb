@@ -1,4 +1,11 @@
 RailsBank::Application.routes.draw do
+  root 'home#index'
+  
+  devise_for :users, class_name: '::User::Record', controllers: { sessions: 'users/sessions', registrations: 'users/registrations' }
+
+  devise_scope :user do
+    resources :transactions, only: [:index, :create, :new]
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
