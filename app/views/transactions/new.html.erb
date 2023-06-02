@@ -1,6 +1,6 @@
 <%= link_to 'Back', root_path, style: 'display: block; margin: 20px auto; text-decoration: none; color: #333; border: 1px solid #333; padding: 10px;' %>
 <%= form_for :transaction, url: transactions_path, html: { style: "text-align: center;" } do |f| %>
-  <div style="display: inline-block; text-align: left;">
+  <div style="display: inline-block; text-align: center;">
     <h2>Make a <%= params[:_type] %></h2>
     
     <%= f.hidden_field :_type, value: params[:_type] %>
@@ -9,8 +9,8 @@
     <%= f.number_field :amount, min: 0, step: 0.01, required: true %>
 
     <% if params[:_type] == 'transfer' %>
-      <%= f.label :to_account_id, "To Account ID" %>
-      <%= f.number_field :to_account_id, min: 0, required: true %>
+      <%= f.label :receiver_account_id, "Receiver account ID" %>
+      <%= f.number_field :receiver_account_id, min: 1, required: true %>
     <% end %>
 
     <%= f.submit "Submit", style: "display: block; margin: 20px auto; background-color: #333; color: white; padding: 10px 20px; border: none; cursor: pointer;" %>
