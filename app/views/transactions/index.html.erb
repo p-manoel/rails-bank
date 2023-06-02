@@ -16,7 +16,7 @@
       <tr>
         <td style="padding: 10px; border-bottom: 1px solid #ddd;"><%= transaction._type %></td>
         <td style="padding: 10px; border-bottom: 1px solid #ddd;"><%= transaction.amount %></td>
-        <td style="padding: 10px; border-bottom: 1px solid #ddd;"><%= transaction.created_at.strftime("%B %d, %Y") %></td>
+        <td style="padding: 10px; border-bottom: 1px solid #ddd;"><%= transaction.created_at.strftime("%B %d, %Y, %H:%M") %></td>
         <td style="padding: 10px; border-bottom: 1px solid #ddd;"><%= transaction.receiver_account_id %></td>
       </tr>
     <% end %>
